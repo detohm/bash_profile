@@ -14,3 +14,8 @@ alias ll='ls -al'
 
 # go module activated 
 export GO111MODULE="on"
+
+# kubectl secret
+function kubesec {
+  kubectl get secrets $@ -o go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
+}
